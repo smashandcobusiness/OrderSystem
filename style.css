@@ -162,3 +162,92 @@ header h1 {
 .checkout-btn:hover {
   background: #1ebe5c;
 }
+
+/* ------------------------------------------------ */
+/* ✅ RESPONSIVE DESIGN UNTUK SEMUA DEVICE */
+/* ------------------------------------------------ */
+
+/* Tablet & bawah (max-width: 992px) */
+@media (max-width: 992px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  #search {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .menu-item {
+    width: 45%;
+  }
+
+  .cart-panel {
+    width: 50%;
+  }
+}
+
+/* Telefon besar (max-width: 768px) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #search {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .menu-tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .menu-tabs button {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+
+  .menu-item {
+    width: 80%;
+  }
+
+  .cart-panel {
+    width: 80%;
+  }
+}
+
+/* Telefon kecil (max-width: 480px) */
+@media (max-width: 480px) {
+  header {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .menu-tabs button {
+    flex: 1 1 100%;
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .menu-item {
+    width: 95%;
+  }
+
+  .menu-item img {
+    height: 160px;
+  }
+
+  .cart-panel {
+    width: 100%;
+    right: -100%;
+  }
+
+  .cart-panel.show {
+    right: 0;
+  }
+}
