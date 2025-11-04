@@ -369,7 +369,7 @@ header h1 {
     bottom: 0;
     height: 100vh; /* penuh tinggi skrin */
     overflow-y: auto; /* boleh scroll bila panjang */
-    padding-top: 60px; /* jarak atas untuk header */
+    padding-top: 90px; /* jarak atas untuk header */
     box-sizing: border-box;
   }
 
