@@ -33,7 +33,9 @@
     </div>
     <ul id="cart-items"></ul>
     <p><strong>Total: RM <span id="cart-total">0.00</span></strong></p>
-    <textarea id="remarks" placeholder="Add remarks (e.g. no cheese, extra fries)"></textarea>
+
+    <textarea id="remarks" placeholder="Add remarks (e.g. no cheese, extra sauce)..."></textarea>
+
     <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
   </div>
 
@@ -56,7 +58,7 @@
       { name: "Smash Daging Special & Fries", price: 10.90, img: "12.png" },
     ];
 
-    let cart = [];
+    const cart = [];
 
     function renderMenu(menuArray) {
       const container = document.getElementById("menu-container");
@@ -79,7 +81,7 @@
       updateCart();
     }
 
-    function removeFromCart(index) {
+    function removeItem(index) {
       cart.splice(index, 1);
       updateCart();
     }
@@ -92,10 +94,8 @@
       cart.forEach((item, index) => {
         total += item.price;
         const li = document.createElement("li");
-        li.innerHTML = `
-          ${item.name} - RM ${item.price.toFixed(2)}
-          <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-        `;
+        li.innerHTML = `${item.name} - RM ${item.price.toFixed(2)} 
+        <button class="remove-btn" onclick="removeItem(${index})">x</button>`;
         cartItems.appendChild(li);
       });
       document.getElementById("cart-total").textContent = total.toFixed(2);
@@ -107,20 +107,21 @@
 
     function checkout() {
       if (cart.length === 0) return alert("Cart is empty!");
-      let message = "Hello Smash & Co.! I'd like to order:%0A";
+      const remarks = document.getElementById("remarks").value.trim();
+      let message = "Hello Smash & Co.! I'd like to order:%0A%0A";
       cart.forEach(item => {
         message += `- ${item.name} (RM ${item.price.toFixed(2)})%0A`;
       });
       const total = cart.reduce((sum, i) => sum + i.price, 0).toFixed(2);
-      const remarks = document.getElementById("remarks").value.trim();
-      message += `%0ATotal: RM ${total}`;
-      if (remarks) message += `%0ARemarks: ${remarks}`;
+      message += `%0ATotal: RM ${total}%0A`;
+      if (remarks) message += `%0ARemarks: ${encodeURIComponent(remarks)}`;
       window.open(`https://www.wasap.my/60175426478?text=${message}`, "_blank");
     }
 
     function showMenu(type) {
       document.getElementById("burger-btn").classList.remove("active");
       document.getElementById("set-btn").classList.remove("active");
+
       if (type === "burger") {
         document.getElementById("burger-btn").classList.add("active");
         renderMenu(burgerMenu);
@@ -138,6 +139,7 @@
       renderMenu(filtered);
     });
 
+    // Default: show burger menu
     renderMenu(burgerMenu);
   </script>
 </body>
