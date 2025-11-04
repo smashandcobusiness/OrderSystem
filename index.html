@@ -101,21 +101,27 @@
       document.getElementById("cart-panel").classList.toggle("show");
     }
 
+    // ✅ FIXED checkout(): WhatsApp message keluar lengkap & kemas
     function checkout() {
       if (cart.length === 0) return alert("Cart is empty!");
+
       const remarks = document.getElementById("remarks").value.trim();
-      let message = "Hello Smash & Co.! I'd like to order:%0A%0A";
+
+      let message = "Hello Smash & Co.! I'd like to order:\n\n";
       cart.forEach(item => {
-        message += `• ${item.name} (RM ${item.price.toFixed(2)})%0A`;
+        message += `• ${item.name} (RM ${item.price.toFixed(2)})\n`;
       });
+
       const total = cart.reduce((sum, i) => sum + i.price, 0).toFixed(2);
-      message += `%0ATotal: RM ${total}`;
+      message += `\nTotal: RM ${total}`;
       if (remarks) {
-        message += `%0A%0ARemarks: ${encodeURIComponent(remarks)}`;
+        message += `\n\nRemarks: ${remarks}`;
       }
+
       const encodedMessage = encodeURIComponent(message);
       const phone = "60175426478";
-      window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+      const url = `https://wa.me/${phone}?text=${encodedMessage}`;
+      window.open(url, "_blank");
     }
 
     function showMenu(type) {
