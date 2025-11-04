@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smash & Co.</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Font Awesome untuk icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* 👇 tambahan untuk animasi terbang ke troli */
+    /* 👇 animasi troli */
     .flying-img {
       position: fixed;
       z-index: 2000;
@@ -17,11 +19,120 @@
       pointer-events: none;
       transition: transform 0.9s ease-in-out, opacity 0.9s ease-in-out;
     }
+
+    /* 👇 logo */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    /* 👇 About Us Section (baru & potong kaki) */
+    .about-section {
+      background-image: url('background.jpg'); /* ganti nama fail ikut gambar kau */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center top; /* fokus bahagian atas gambar */
+      height: 70vh; /* potong bawah gambar */
+      overflow: hidden; /* elak gambar keluar */
+      color: white;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      margin-top: 40px;
+    }
+
+    .about-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .about-section h2 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .about-section p {
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 1.8em;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-link span {
+      font-size: 0.9em;
+      margin-top: 6px;
+    }
+
+    .social-link:hover {
+      transform: scale(1.2);
+      color: #ffb703;
+    }
+
+    /* 👇 Responsive untuk phone potrait */
+    @media (max-width: 768px) {
+      .about-section {
+        padding: 60px 15px;
+        background-position: center top;
+        height: 60vh; /* potong lagi untuk phone */
+      }
+
+      .about-section h2 {
+        font-size: 1.8em;
+      }
+
+      .about-section p {
+        font-size: 1em;
+      }
+
+      .social-link {
+        font-size: 1.5em;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Smash & Co.</h1>
+    <div class="logo-container">
+      <img src="logo.png" alt="Smash & Co. Logo" />
+      <h1>Smash & Co.</h1>
+    </div>
     <input type="text" id="search" placeholder="Search menu..." />
     <div class="cart" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
   </header>
@@ -36,6 +147,38 @@
       <div class="menu" id="menu-container"></div>
     </section>
   </main>
+
+  <!-- 👇 Bahagian About Us -->
+  <section class="about-section">
+    <div class="about-content">
+      <h2>About Us</h2>
+      <p>
+        At <strong>Smash & Co.</strong>, we serve freshly smashed burgers made with passion, 
+        quality ingredients, and a local twist that keeps you coming back for more. 
+        We believe great food brings people together — and that’s what we do best!
+      </p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/smashandco.business?igsh=MTYya3I5bWV2YjJwYw==" target="_blank" class="social-link">
+          <i class="fab fa-instagram"></i>
+          <span>Visit our Instagram</span>
+        </a>
+        <a href="https://www.tiktok.com/@smashandco..busin?_r=1&_t=ZS-917pP21VWvl" target="_blank" class="social-link">
+          <i class="fab fa-tiktok"></i>
+          <span>Visit our TikTok</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61583175069377" target="_blank" class="social-link">
+          <i class="fab fa-facebook"></i>
+          <span>Visit our Facebook</span>
+        </a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFeHKtCDyRqx27BNvCf9xLYiXPLZSw3KY7qjgb-2Nq0zJnZg/viewform?usp=header" target="_blank" class="social-link">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span>Send us Feedback</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer dibuang -->
 
   <div class="cart-panel" id="cart-panel">
     <div class="cart-header">
@@ -91,7 +234,6 @@
       animateToCart(btn, imgSrc);
     }
 
-    // 👇 animasi gambar terbang ke troli
     function animateToCart(button, imgSrc) {
       const cartIcon = document.querySelector('.cart');
       const img = document.createElement('img');
