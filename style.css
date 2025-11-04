@@ -1,14 +1,11 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #000;
+  background-color: #000000;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden; /* ✅ elak skrin ke kanan bila cart keluar */
 }
 
-/* Header */
 header {
   display: flex;
   align-items: center;
@@ -16,20 +13,12 @@ header {
   background: #ffb703;
   padding: 15px 20px;
   color: #fff;
-  flex-wrap: wrap;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-container img {
-  width: 45px;
-  height: 45px;
-  border-radius: 8px;
-  object-fit: cover;
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  margin: 0;
 }
 
 #search {
@@ -37,27 +26,25 @@ header {
   border-radius: 4px;
   border: none;
   width: 40%;
-  max-width: 400px;
 }
 
 .cart {
   font-size: 20px;
   cursor: pointer;
+  position: relative;
 }
 
-/* Menu Tabs */
+/* ✅ Tab Menu Panjang Memanjang */
 .menu-tabs {
   display: flex;
   justify-content: center;
-  margin: 20px auto;
+  margin: 20px 0;
   gap: 10px;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 600px;
 }
 
 .menu-tabs button {
-  flex: 1 1 45%;
+  flex: 1;
+  max-width: 250px;
   padding: 12px 0;
   border: none;
   background: #eee;
@@ -72,17 +59,15 @@ header {
   color: white;
 }
 
-/* Menu Cards */
 .menu {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  padding: 0 10px 50px;
 }
 
 .menu-item {
-  background: #000;
+  background: rgb(0, 0, 0);
   border: 1px solid #ddd;
   border-radius: 8px;
   width: 200px;
@@ -94,8 +79,9 @@ header {
 
 .menu-item img {
   width: 100%;
-  border-radius: 8px;
+  height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .menu-item button {
@@ -108,24 +94,50 @@ header {
   cursor: pointer;
 }
 
-/* Cart Panel */
+/* ------------------------------------------------ */
+/* ✅ CART PANEL FIX (TAK KELUAR MASA MULA) */
+/* ------------------------------------------------ */
 .cart-panel {
   position: fixed;
   top: 0;
-  right: -400px;
+  right: -400px !important; /* ✅ sembunyi masa mula */
   width: 300px;
   height: 100%;
   background: white;
   border-left: 2px solid #ffb703;
   box-shadow: -2px 0 5px rgba(0,0,0,0.1);
   padding: 20px;
-  transition: 0.3s;
+  transition: right 0.3s ease;
   overflow-y: auto;
   z-index: 100;
+  visibility: hidden; /* ✅ elak nampak masa belum aktif */
+  opacity: 0;
 }
 
 .cart-panel.show {
-  right: 0;
+  right: 0 !important;
+  visibility: visible; /* ✅ hanya nampak bila aktif */
+  opacity: 1;
+  transition: right 0.3s ease, opacity 0.3s ease;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+#cart-items li {
+  border-bottom: 1px solid #eee;
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .remove-btn {
@@ -137,34 +149,133 @@ header {
   cursor: pointer;
 }
 
-/* About Section */
-.about-section {
-  background: url('background.jpg') no-repeat center top/cover;
-  height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  color: #fff;
-  text-align: center;
-  padding: 100px 20px 40px;
-  position: relative;
-  margin-top: 40px;
+#remarks {
+  width: 100%;
+  height: 60px;
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.about-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
+.checkout-btn {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.about-content {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
+.checkout-btn:hover {
+  background: #1ebe5c;
 }
 
-/* Responsive */
+/* ------------------------------------------------ */
+/* ✅ RESPONSIVE DESIGN UNTUK SEMUA DEVICE */
+/* ------------------------------------------------ */
+
+/* Tablet & bawah (max-width: 992px) */
+@media (max-width: 992px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  #search {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .menu-item {
+    width: 45%;
+  }
+
+  .cart-panel {
+    width: 50%;
+    right: -50%;
+  }
+
+  .cart-panel.show {
+    right: 0;
+  }
+}
+
+/* Telefon besar (max-width: 768px) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #search {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .menu-tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .menu-tabs button {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+
+  .menu-item {
+    width: 80%;
+  }
+
+  .cart-panel {
+    width: 80%;
+    right: -80%;
+  }
+
+  .cart-panel.show {
+    right: 0;
+  }
+}
+
+/* Telefon kecil (max-width: 480px) */
+@media (max-width: 480px) {
+  header {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .menu-tabs button {
+    flex: 1 1 100%;
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .menu-item {
+    width: 95%;
+  }
+
+  .menu-item img {
+    height: 160px;
+  }
+
+  .cart-panel {
+    width: 100%;
+    right: -100%;
+  }
+
+  .cart-panel.show {
+    right: 0;
+  }
+}
+
+/* ------------------------------------------------ */
+/* ✅ EXTRA FIX SUPAYA TAK LARI DI PHONE */
+/* ------------------------------------------------ */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -177,23 +288,40 @@ header {
     margin: 10px 0;
   }
 
+  .cart {
+    margin-top: 5px;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .menu-item {
-    width: 80%;
+    width: 90%;
+    max-width: 360px;
   }
 
-  .cart-panel {
-    width: 80%;
+  .menu-item img {
+    height: auto;
   }
 
-  .about-section {
-    height: 60vh;
-    padding-top: 40px;
+  .menu-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .menu-tabs button {
+    flex: 1 1 45%;
+    max-width: 45%;
   }
 }
 
 @media (max-width: 480px) {
-  header {
-    padding: 10px;
+  .menu-item {
+    width: 95%;
   }
 
   header h1 {
@@ -204,21 +332,30 @@ header {
     width: 95%;
   }
 
-  .menu-item {
-    width: 95%;
+  .menu-tabs button {
+    flex: 1 1 100%;
+    max-width: 100%;
+    font-size: 14px;
   }
+}
 
-  .cart-panel {
-    width: 100%;
-    right: -100%;
-  }
-
-  .cart-panel.show {
-    right: 0;
-  }
-
-  .about-section {
-    height: 55vh;
-    padding-top: 30px;
-  }
+/* ------------------------------------------------ */
+/* ✅ About Us Section (tetap di bawah & tak ganggu layout) */
+/* ------------------------------------------------ */
+.about-section {
+  background-image: url('background.jpg'); /* ganti nama fail ikut gambar sebenar */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 70vh;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 20px 40px;
+  position: relative;
+  margin-top: 40px;
+  z-index: 0;
+  overflow: visible; /* ✅ elak ganggu cart panel */
 }
