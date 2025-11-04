@@ -10,9 +10,7 @@
   <header>
     <h1>Smash & Co.</h1>
     <input type="text" id="search" placeholder="Search menu..." />
-    <div class="cart" onclick="toggleCart()">
-      🛒 <span id="cart-count">0</span>
-    </div>
+    <div class="cart" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
   </header>
 
   <main>
@@ -33,9 +31,7 @@
     </div>
     <ul id="cart-items"></ul>
     <p><strong>Total: RM <span id="cart-total">0.00</span></strong></p>
-
-    <textarea id="remarks" placeholder="Add remarks (e.g. no cheese, extra sauce)..."></textarea>
-
+    <textarea id="remarks" placeholder="Remarks (e.g. no cheese, extra sauce)..."></textarea>
     <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
   </div>
 
@@ -95,7 +91,7 @@
         total += item.price;
         const li = document.createElement("li");
         li.innerHTML = `${item.name} - RM ${item.price.toFixed(2)} 
-        <button class="remove-btn" onclick="removeItem(${index})">x</button>`;
+          <button class="remove-btn" onclick="removeItem(${index})">X</button>`;
         cartItems.appendChild(li);
       });
       document.getElementById("cart-total").textContent = total.toFixed(2);
@@ -110,12 +106,16 @@
       const remarks = document.getElementById("remarks").value.trim();
       let message = "Hello Smash & Co.! I'd like to order:%0A%0A";
       cart.forEach(item => {
-        message += `- ${item.name} (RM ${item.price.toFixed(2)})%0A`;
+        message += `• ${item.name} (RM ${item.price.toFixed(2)})%0A`;
       });
       const total = cart.reduce((sum, i) => sum + i.price, 0).toFixed(2);
-      message += `%0ATotal: RM ${total}%0A`;
-      if (remarks) message += `%0ARemarks: ${encodeURIComponent(remarks)}`;
-      window.open(`https://www.wasap.my/60175426478?text=${message}`, "_blank");
+      message += `%0ATotal: RM ${total}`;
+      if (remarks) {
+        message += `%0A%0ARemarks: ${encodeURIComponent(remarks)}`;
+      }
+      const encodedMessage = encodeURIComponent(message);
+      const phone = "60175426478";
+      window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
     }
 
     function showMenu(type) {
@@ -139,7 +139,6 @@
       renderMenu(filtered);
     });
 
-    // Default: show burger menu
     renderMenu(burgerMenu);
   </script>
 </body>
