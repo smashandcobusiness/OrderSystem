@@ -359,3 +359,32 @@ header h1 {
   z-index: 0;
   overflow: visible; /* ✅ elak ganggu cart panel */
 }
+
+/* ------------------------------------------------ */
+/* ✅ FIX TAMBAHAN UNTUK CART PANEL DI PHONE */
+/* ------------------------------------------------ */
+@media (max-width: 768px) {
+  .cart-panel {
+    top: 0;
+    bottom: 0;
+    height: 100vh; /* penuh tinggi skrin */
+    overflow-y: auto; /* boleh scroll bila panjang */
+    padding-top: 60px; /* jarak atas untuk header */
+    box-sizing: border-box;
+  }
+
+  .cart-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 15px 20px;
+    border-bottom: 2px solid #ffb703;
+    z-index: 200;
+  }
+
+  #cart-items {
+    margin-top: 20px;
+  }
+}
