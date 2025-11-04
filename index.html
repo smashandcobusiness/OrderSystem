@@ -33,20 +33,20 @@
       object-fit: cover;
     }
 
-    /* 👇 About Us Section (fully responsive + teks naik sikit) */
+    /* 👇 About Us Section (naikkan teks ke atas dan buang footer bawah) */
     .about-section {
       background-image: url('background.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center top;
-      min-height: 70vh;
+      height: 75vh;
       overflow: hidden;
       color: white;
       text-align: center;
       display: flex;
       align-items: flex-start; /* naikkan isi ke atas */
       justify-content: center;
-      padding: 100px 20px 60px;
+      padding: 80px 20px 0; /* naikkan teks lagi */
       position: relative;
       margin-top: 40px;
     }
@@ -67,7 +67,7 @@
     }
 
     .about-section h2 {
-      font-size: 2.2em;
+      font-size: 2.3em;
       margin-bottom: 15px;
       font-weight: bold;
     }
@@ -105,11 +105,11 @@
       color: #ffb703;
     }
 
-    /* 👇 Responsive untuk tablet dan phone */
+    /* 👇 Responsive */
     @media (max-width: 992px) {
       .about-section {
-        min-height: 60vh;
-        padding: 80px 25px 40px;
+        height: 65vh;
+        padding-top: 60px;
       }
       .about-section h2 {
         font-size: 2em;
@@ -118,45 +118,35 @@
 
     @media (max-width: 768px) {
       .about-section {
-        background-position: center top;
-        align-items: flex-start;
-        min-height: 55vh;
-        padding: 70px 20px 30px;
+        height: 60vh;
+        padding-top: 50px;
       }
-
       .about-section h2 {
-        font-size: 1.7em;
+        font-size: 1.8em;
       }
-
       .about-section p {
-        font-size: 0.95em;
+        font-size: 1em;
       }
-
       .social-link {
         font-size: 1.4em;
-      }
-
-      .social-icons {
-        gap: 25px;
       }
     }
 
     @media (max-width: 480px) {
       .about-section {
-        padding: 60px 15px 30px;
-        min-height: 50vh;
+        height: 55vh;
+        padding-top: 40px;
       }
-
       .about-section p {
         font-size: 0.9em;
       }
-
       .social-link {
         font-size: 1.3em;
       }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo-container">
