@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Payment - Smash & Co.</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .qr-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 40px 20px;
+      display: inline-block;
+    }
+
+    .qr-box img {
+      width: 220px;
+      height: 220px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .total {
+      font-size: 1.2em;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #219150;
+    }
+  </style>
+</head>
+<body>
+  <div class="qr-box">
+    <h2>Scan to Pay</h2>
+    <img src="qrcode.png" alt="QR Code" />
+    <p>Scan this QR code to make payment via DuitNow or Online Banking.</p>
+    <p class="total" id="totalAmount"></p>
+    <button id="confirmBtn">I Have Paid</button>
+  </div>
+
+  <script>
+    // Dapatkan data dari localStorage
+    const orderData = JSON.parse(localStorage.getItem("smashOrder"));
+    const totalDisplay = document.getElementById("totalAmount");
+
+    if (orderData && orderData.total) {
+      totalDisplay.textContent = "Total Amount: RM " + orderData.total;
+    } else {
+      totalDisplay.textContent = "No order data found.";
+    }
+
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+      window.location.href = "payment_success.html";
+    });
+  </script>
+</body>
+</html>
