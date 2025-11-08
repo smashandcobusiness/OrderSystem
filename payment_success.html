@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful - Smash & Co.</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 40px;
+      border-radius: 12px;
+      background: #f8f9fa;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .redirect-text {
+      margin-top: 20px;
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Payment Successful 🎉</h1>
+    <p>Thank you for your payment!</p>
+    <p>You will receive an email confirmation shortly.</p>
+    <p class="redirect-text">Automatically redirecting in <span id="countdown">15</span> seconds...</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("MMjf8dKlv3GcVq9Wg"); // public key
+    })();
+
+    window.onload = function() {
+      const order = JSON.parse(localStorage.getItem("smashOrder"));
+      if (!order) return alert("No order data found!");
+
+      // tukar orderDetails jadi array
+      const orderList = order.orderDetails
+        .split("\n")
+        .map(item => {
+          const [name, price] = item.split(" - RM ");
+          return { name: name?.trim() || "", price: price?.trim() || "0.00" };
+        });
+
+      // isi semua data untuk emel
+      const templateParams = {
+        customer_name: order.customer_name,
+        remarks: order.remarks,
+        customer_phone: order.customer_phone,
+        total: order.total,
+        order_id: Math.floor(Math.random() * 1000000),
+        orders: orderList,
+        to_email: order.customer_email,  // email user
+        cc_email: "smashandco.business@gmail.com" // 🔥 email admin awak
+      };
+
+      // hantar guna EmailJS
+      emailjs.send("service_pvkwtsr", "template_snc", templateParams)
+        .then(() => {
+          console.log("✅ Email sent to user & admin!");
+          localStorage.removeItem("smashOrder");
+        })
+        .catch((error) => {
+          console.error("❌ Email send error:", error);
+          alert("Failed to send confirmation email.");
+        });
+
+      // countdown + auto redirect lepas 15 saat
+      let timeLeft = 15;
+      const countdownElement = document.getElementById("countdown");
+      const timer = setInterval(() => {
+        timeLeft--;
+        countdownElement.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          window.location.href = "index.html";
+        }
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
